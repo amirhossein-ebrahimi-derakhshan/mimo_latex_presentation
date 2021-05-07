@@ -1,0 +1,678 @@
+\documentclass{beamer}
+
+\usepackage{amsmath,mathtools,amssymb}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\graphicspath{ {./images/} }
+\usepackage{lscape}
+\usepackage{rotating}
+\usepackage{epstopdf}
+\usepackage{sidecap}
+\usepackage{xcolor}
+\usepackage{multicol}
+\usepackage{alltt}
+\usepackage{xfrac}
+\renewcommand{\ttdefault}{txtt}
+
+
+%\usetheme{Boadilla}
+
+ \usetheme[secheader]{Boadilla}
+ 
+ \setbeamertemplate{headline}{}
+
+      %#make sure to change this part, since it is predefined
+      %\defbeamertemplate*{footline}{infolines theme}
+      \setbeamertemplate{footline}
+        {
+      \leavevmode%
+      \hbox{%
+      \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+        \usebeamerfont{author in head/foot}\insertshortauthor
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+        \usebeamerfont{title in head/foot}\insertshorttitle
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+        \usebeamerfont{date in head/foot}\insertshortdate{\hspace*{2ex}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex}}
+
+    %#turning the next line into a comment, erases the frame numbers
+       % \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+
+      \end{beamercolorbox}}%
+      \vskip0pt%
+      %\setbeamertemplate{headline}{}
+    }
+
+%\definecolor{mediumturquoise}{rgb}{0.125, 0.5, 0.25}
+%\usecolortheme[named = mediumturquoise]{structure}
+%\addtobeamertemplate{navigation symbols}{}{%
+ %   \usebeamerfont{footline}%
+  %  \usebeamercolor[fg]{footline}%
+   % \hspace{1em}%
+    %\insertframenumber/\inserttotalframenumber}
+
+%\renewcommand{\insertnavigation}[1]{}
+
+
+
+\title{Massive MIMO}
+\author{AmirHossein Ebrahimi Derakhshan}
+\institute{University of Tabriz}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}[fragile=singleslide]\frametitle{Introduction}
+%\textbf{some definitions:}
+
+\begin{itemize}
+\item Cellular network :
+
+A set of base stations (BSs) and a set of user equipments (UEs).
+\end{itemize}
+\begin{landscape}
+\includegraphics[width=11cm, height=5.1cm]{Capture02.PNG} 
+\end{landscape}
+
+
+\tiny Emil Björnson, Jakob Hoydis and Luca Sanguinetti (2017), “Massive MIMO Networks: Spectral, Energy, and Hardware Efficiency”, Foundations and Trends® in Signal Processing
+
+\end{frame}
+
+
+
+
+
+
+
+\begin{frame}[fragile=singleslide]\frametitle{Introduction}
+Each UE is connected to one of the BSs.
+\begin{itemize}
+\item Downlink (DL)
+
+Signals sent from the BSs to their respective UEs 
+\item Uplink (UL)
+
+transmissions from the UEs to their respective BSs
+\end{itemize}
+This presentation focuses on the wireless communication links between BSs and UEs. remaining network infrastructure is assumed to function perfectly.
+
+\begin{figure}
+  \includegraphics[width=9cm, height=3.5cm]{Capture22.PNG}
+  \caption{\tiny \tiny E. Bjornson, E. G. Larsson and T. L. Marzetta,"Massive mimo: ten myths and one critical question", IEEE Commun. Mag, vol. 54, pp. 114-123,2016.
+}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile=singleslide]\frametitle{Introduction}
+%\begin{wrapfigure}{i}{0.4\textwidth}
+%   \centering
+%    \includegraphics[width=3cm, height=4cm]{Capture01.PNG}
+%\end{wrapfigure}
+%\begin{landscape}
+several branches of wireless technologies
+
+
+
+they form a heterogeneous network consisting of two main tiers:
+
+
+
+Coverage tier \& Hotspot tier
+ 
+%\hspace{1.5cm}\includegraphics[width=7.5cm, height=6cm]{Capture01.PNG} 
+%\end{landscape}
+\begin{figure}
+  \includegraphics[width=7.5cm, height=5.5cm]{Capture01.PNG}
+\end{figure}
+
+
+
+\tiny Emil Björnson, Jakob Hoydis and Luca Sanguinetti (2017), “Massive MIMO Networks: Spectral, Energy, and Hardware Efficiency”, Foundations and Trends® in Signal Processing
+
+\end{frame}
+
+
+
+\begin{frame}[fragile=singleslide]\frametitle{Introduction}
+\begin{enumerate}
+\item Coverage tier: Outdoor cellular BSs
+\begin{itemize}
+\item coverage, elevated base stations
+\item Outdoor-to-indoor coverage: Operate <6 GHz
+\item High spectral efficiency is desired
+\end{itemize}
+
+\vspace{1.2cm}
+
+\item Hotspot tier: Indoor BSs(mainly)
+\begin{itemize}
+\item High cell density, short range per cell
+\item Wide bandwidths in mm-wave bands
+\item Spectral efficiency less important
+\end{itemize}
+\end{enumerate}
+
+\vspace{1.2cm}
+
+\tiny Emil Björnson, Jakob Hoydis and Luca Sanguinetti (2017), “Massive MIMO Networks: Spectral, Energy, and Hardware Efficiency”, Foundations and Trends® in Signal Processing
+
+\end{frame}
+
+\section{Improving Cellular Networks}
+
+\begin{frame}[fragile=singleslide]\frametitle{Improving Cellular Networks}
+
+ Formula for Network Throughput $[bit/s/km^2]$:
+\begin{equation}\label{throughput}  
+\underbrace{Throughput}_{\mathbf{bit/s/km^2}}=\underbrace{Available\,spectrum}_{\mathbf{Hz}}.\underbrace{Cell\,density}_{\mathbf{Cell/km^2}}.\underbrace{Spectral\,efficiency}_{\mathbf{bit/s/Hz/Cell}}
+\end{equation}
+
+
+Consequently, three main ways to improve the area throughput of cellular networks:
+
+\hspace{1cm}
+\begin{enumerate}
+\item Allocate more bandwidth;
+\item Densify the network by deploying more BSs;
+\item Improve the SE per cell.
+\end{enumerate}
+
+\vspace{1.2cm}
+
+\tiny Emil Björnson, Jakob Hoydis and Luca Sanguinetti (2017), “Massive MIMO Networks: Spectral, Energy, and Hardware Efficiency”, Foundations and Trends® in Signal Processing
+
+\end{frame}
+
+%Current cellular networks utilize more than 1 GHz of bandwidth in the frequency range below 6 GHz.
+
+\begin{frame}[fragile=singleslide]\frametitle{The Success of Wireless Communications}
+
+\begin{itemize}
+\item More devices and data traffic every year
+\begin{itemize}
+\item 10\% more devices
+\item 47\% more traffic (33\% more per device)
+\end{itemize}
+\end{itemize}
+%\begin{landscape}
+%\includegraphics[width=7cm, height=4cm]{Capture04.PNG}
+%\caption{Data source:Ericsson Mobility Report (July, November 2017)} 
+%\label{Data source:Ericsson Mobility Report (July, November 2017)}
+%\end{landscape}
+\begin{figure}
+  \includegraphics[width=10cm, height=4.5cm]{Capture04.PNG}
+\caption{Data source:Ericsson Mobility Report (July, November 2017)} 
+%\label{Data source:Ericsson Mobility Report (July, November 2017)}
+\end{figure}
+\end{frame}
+
+
+
+
+\begin{frame}[t,fragile=singleslide]\frametitle{Improving Cellular Networks}
+\centerline{\textit{"the 1000× data challenge"}}
+ 
+\centerline{\textit{posed by Qualcomm for next 15–20 years}}
+
+\vspace{0.7cm}
+
+such a network can handle the three orders-of-magnitude increase in wireless data traffic if the annual traffic growth rate continues to be in the range of $41\% – 59\%$.
+
+\vspace{0.7cm}
+
+\textcolor{blue}{\textit{higher data rates, larger network capacity, higher spectral efficiency, higher energy efficiency, and better mobility}}
+\vspace{0.65cm}
+
+How can handle according to the formula in \eqref{throughput}?
+
+\vspace{1.2cm}
+
+\tiny Emil Björnson, Jakob Hoydis and Luca Sanguinetti (2017), “Massive MIMO Networks: Spectral, Energy, and Hardware Efficiency”, Foundations and Trends® in Signal Processing
+
+\end{frame}
+
+
+
+
+\begin{frame}[fragile=singleslide]\frametitle{Improving Cellular Networks}
+\begin{itemize}
+\item \textit{increase the bandwidth ?}
+
+\end{itemize}
+Currently more than 1GHz of bandwidth below 6GHz range
+
+
+\centerline{$1000\times$ bandwidth}
+
+
+\centerline{$\Rightarrow$ more than 1 THz of bandwidth }
+
+            
+\centerline{      \emph{This is physically impractical}}
+
+\begin{figure}
+  \includegraphics[width=11cm, height=3cm]{Capture35.PNG}
+\caption{More BandWidth is not a solution} 
+\end{figure}
+
+
+
+\tiny Emil Björnson, Jakob Hoydis and Luca Sanguinetti (2017), “Massive MIMO Networks: Spectral, Energy, and Hardware Efficiency”, Foundations and Trends® in Signal Processing
+
+\end{frame}
+
+
+
+
+\begin{frame}[fragile=singleslide]\frametitle{Interference Limits the Spectral Efficiency}
+\begin{itemize}
+\item \textit{Densify the cellular network ?}
+\end{itemize}
+\begin{enumerate}
+\item Limited number of locations
+\item high deployment costs 
+\item inter-cell interference issues
+\item not suitable for mobile UEs
+\end{enumerate}
+\begin{figure}
+  \includegraphics[width=10cm, height=4.5cm]{Capture06.PNG}
+%\caption{Cell densification is not a solution} 
+\end{figure}
+\tiny Emil Björnson, Jakob Hoydis and Luca Sanguinetti (2017), “Massive MIMO Networks: Spectral, Energy, and Hardware Efficiency”, Foundations and Trends® in Signal Processing
+
+\tiny YouTube channel: Wireless Future
+\end{frame}
+
+
+\begin{frame}[fragile=singleslide]\frametitle{How to Achieve More Uniform Coverage?}
+\begin{figure}
+  \includegraphics[width=11cm, height=5cm]{Capture08.PNG}
+\caption{Desired: Stronger signal, same interference levels} 
+\end{figure}
+\tiny source: YouTube channel: Wireless Future
+\end{frame}
+
+\begin{frame}[fragile=singleslide]\frametitle{Definition of Spectral Efficiency}
+The Nyquist-Shannon sampling theorem implies that the band-limited communication signal that is sent over a channel with a bandwidth of B Hz is completely determined by 2B real-valued equal-spaced samples per second
+
+$$f < 2B$$ %Nyquist rate
+
+\textit{Spectral efficiency:}
+
+The SE of an encoding/decoding scheme is the average number of bits of information, per complex valued sample, that it can reliably transmit over the channel(bit/s/Hz).
+
+$$\mathrm{ SE = \log_{2}\left(1+\frac{Transmit\, signal\, power \cdot \textcolor{green}{Pathloss}}{\textcolor{green}{interference power} + N_{0} \cdot \textcolor{blue}{bandwidth}}\right) }$$ %Shannon–Hartley theorem
+
+\vspace{0.4cm}
+
+\tiny Emil Björnson, Jakob Hoydis and Luca Sanguinetti (2017), “Massive MIMO Networks: Spectral, Energy, and Hardware Efficiency”, Foundations and Trends® in Signal Processing
+\end{frame}
+
+\section{Finding solution}
+
+\begin{frame}[t,fragile=singleslide]\frametitle{Beamforming is the Solution!}
+\begin{figure}
+  \includegraphics[width=11cm, height=3.5cm]{Capture09.PNG}
+ %\setbeamertemplate{caption}{\insertcaption}
+ %\caption{\tiny source: YouTube channel: Wireless Future}
+\end{figure}
+Same transmit power \hspace{1.7cm}        More antennas
+
+
+\vspace{0.35cm}
+\begin{itemize}
+	\begin{minipage}{0.49\linewidth}
+        \item \footnotesize Color indicates path loss in dB
+        \item \footnotesize M base station (BS) antennas
+        \item \footnotesize Main lobe focused at user
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \item \footnotesize Narrower beams, laser-like
+        \item \scriptsize Array gain:$ 10\log_{10}$(M)dB larger at user
+        \item \footnotesize Less leakage in undesired directions
+   \end{minipage}
+\end{itemize}
+
+\vspace{0.65cm}
+\centerline{\tiny source: YouTube channel: Wireless Future}
+\end{frame}
+
+\section{What is massive MIMO?}
+
+\begin{frame}[t,fragile=singleslide]\frametitle{What is massive MIMO?}
+
+Massive MIMO is a scaled up version of the conventional small scale MIMO systems
+
+A multiuser communications solution that employs a large number of antenna elements to serve simultaneously multiple users.
+
+\begin{figure}
+  \includegraphics[width=11cm, height=3.5cm]{Capture11.PNG}
+  \caption{\footnotesize Base Station \hspace{1cm}   Massive MIMO channel \hspace{1cm}    User Equipments
+
+\vspace{0.35cm}  
+  
+  \tiny M. A. Albreem, M. Juntti and S. Shahabuddin, "Massive MIMO detection techniques: A survey", IEEE Commun. Surv. Tutor, 2019.
+}
+\end{figure}
+\end{frame}
+
+%\begin{frame}[t,fragile=singleslide]\frametitle{Beamforming is the Solution!}
+%\begin{itemize}
+%A highly spectrally efficient coverage tier in a cellular network characteristics:
+
+%\item It uses SDMA to achieve a multiplexing gain
+
+%\item It has more BS antennas than UEs per cell
+
+%\item It operates in TDD mode to limit the CSI acquisition overhead
+%\end{itemize}
+%\end{frame}
+
+
+
+\begin{frame}[t,fragile=singleslide]\frametitle{What is massive MIMO?}
+
+New wireless access technology in 5G, in both sub-6 GHz and mmWave bands
+
+
+The core technology that likely will be utilized in all future wireless technologies.
+\begin{figure}
+  \includegraphics[width=11cm, height=4cm]{Capture18.PNG}
+  \caption{\footnotesize Illustration of downlink Massive MIMO in line-of-sight communication}
+\tiny source: ma-mimo.ellintech.se
+\end{figure}
+\end{frame}
+
+
+\begin{frame}[t,fragile=singleslide]\frametitle{What is massive MIMO?}
+The key concept is to equip base stations with arrays of many antennas, which are used to serve many terminals simultaneously, in the same time-frequency resource. 
+
+
+The word “massive” refer to the number of antennas and not the physical size.
+%in the 2 GHz band, a half-wavelength-spaced rectangular array with 200 dual-polarized elements is about 1.5 x 0.75 meters large.
+\begin{figure}
+  \includegraphics[width=11cm, height=3cm]{Capture23.PNG}
+  \caption{\tiny The array consists of 160 dual-polarized patch antennas. It is designed for a carrier frequency of 3.7 GHz, and the element spacing is 4 cm (half a wavelength).}
+\tiny E. Bjornson, E. G. Larsson and T. L. Marzetta,"Massive mimo: ten myths and one critical question", IEEE Commun. Mag, vol. 54, pp. 114-123,2016.
+\end{figure}
+
+\end{frame}
+
+\section{Canonical Massive MIMO network Definition}
+
+\begin{frame}[fragile=singleslide]\frametitle{Canonical Massive MIMO network Definition:}
+\begin{itemize}
+\item A multicarrier cellular network with L cells
+\item Operate according to a synchronous TDD protocol
+\item $with \; M_{j} \geq 1 \;antennas$
+\item $BS \ j \ communicates \ with \ K_{j} \ UEs \ on \ each \ time/frequency$
+\item $with\; antenna-UE\; ratio\; M_{j}/K_{j} > 1$
+\end{itemize}
+\vspace{0.75cm}
+\textit{Each BS operates individually and processes its signals using:}
+\begin{itemize}
+\item linear receive combining
+\item linear transmit precoding
+\end{itemize}
+
+\vspace{1cm}
+
+\tiny Emil Björnson, Jakob Hoydis and Luca Sanguinetti (2017), “Massive MIMO Networks: Spectral, Energy, and Hardware Efficiency”, Foundations and Trends® in Signal Processing
+\end{frame}
+
+\begin{frame}[t,fragile=singleslide]\frametitle{Canonical Massive MIMO network Definition:}
+The canonical Massive MIMO system operates in TDD mode %where the UL and DL transmissions take place in the same frequency resource but are separated in time.
+\textcolor{blue}{\textit{reasons}}:
+\begin{itemize}
+\item First, only the BS needs to know the channels to process the antennas coherently.
+\item Second, the UL estimation overhead is proportional to the number of terminals, but independent of M
+\item basic estimation theory tells us that the estimation quality (per antenna) cannot be reduced by adding more antennas
+\end{itemize}
+\begin{figure}
+  \includegraphics[width=4cm, height=3cm]{Capture24.PNG}
+\end{figure}
+\tiny E. Bjornson, E. G. Larsson and T. L. Marzetta,"Massive mimo: ten myths and one critical question", IEEE Commun. Mag, vol. 54, pp. 114-123,2016.
+\end{frame}
+
+
+\section{Why Massive MIMO?}
+
+\begin{frame}[fragile=singleslide]\frametitle{Why Massive MIMO?}
+
+Massive MIMO relies on increasing the spatial multiplexing gain and the diversity gain by adding the number of antennas at the BS
+
+with relatively simple processing of signals from all the antennas
+
+\vspace{0.75cm}
+
+
+\textit{The potential benefits of massive MIMO:}
+\begin{itemize}
+\item Capacity and link reliability
+\item Spectral efficiency
+\item Energy efficiency
+\item Security enhancement and robustness improvement
+\item Cost efficiency
+\item Signal processing
+\end{itemize}
+
+\vspace{0.5cm}
+
+\tiny M. A. Albreem, M. Juntti and S. Shahabuddin, "Massive MIMO detection techniques: A survey", IEEE Commun. Surv. Tutor, 2019.
+
+\end{frame}
+
+\begin{frame}[t,fragile=singleslide]\frametitle{Why Massive MIMO?}
+\begin{itemize}
+\item Capacity and link reliability:
+\begin{itemize}
+\item Massive MIMO increases the diversity gain, and hence, provides link robustness as it resists fading
+%\scriptsize increases the diversity gain$\Rightarrow$provides link robustness$\Rightarrow$resist fading
+\item The capacity increases without a bound as the number of antenna increases
+%\scriptsize the capacity increases without a bound as the number of antenna
+\end{itemize}
+
+
+
+\begin{figure}
+  \includegraphics[width=4.5cm, height=3cm]{Capture12.PNG}
+  \includegraphics[width=4.5cm, height=3cm]{Capture50.PNG}
+\end{figure}
+
+\small $$ \mathrm{ \textcolor{red}{Multiplexed\, users} \cdot \textcolor{blue}{BW} \cdot \log_{2}\left(1+\frac{Transmit\, signal\, power \cdot \textcolor{green}{Pathloss}}{\textcolor{green}{interference power} + N_{0} \cdot \textcolor{blue}{BW}}\right) }$$
+
+\tiny M. A. Albreem, M. Juntti and S. Shahabuddin, "Massive MIMO detection techniques: A survey", IEEE Commun. Surv. Tutor, 2019.
+
+\tiny Inaugural talk from (SIIR) Group at Manchester Metropolitan University, UK on  "Evolving the Mobile Broadband Connectivity Towards 6G"
+
+\tiny YouTube channel: Wireless Future
+%\tiny 12th Webinar in “New Technologies for Future Generations of Wireless Systems”. Prof. Bjornson talk on “Reconfigurable Intelligent Surfaces: A Signal Processing Perspective” 
+%\tiny github.com/emilbjornson/presentation_slides
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile=singleslide]\frametitle{Why Massive MIMO?}
+\begin{itemize}
+\item Spectral efficiency
+\begin{itemize}
+\item \scriptsize improves the SE of the cellular network by spatial multiplexing of a large number of UEs per cell
+
+
+\item Numerous antennas
+
+
+$\Rightarrow$ \scriptsize more spatial data-streams, more throughput, more multiplexing gain
+
+
+$\Rightarrow$ high spectral efficiency
+\end{itemize}
+\end{itemize}
+overall spectral efficiency in the massive MIMO can be ten times higher than in the conventional MIMO
+
+\begin{figure}
+  \includegraphics[width=5.2cm, height=2.9cm]{Capture51.PNG}
+  \includegraphics[width=5.2cm, height=2.9cm]{Capture52.PNG}
+\end{figure}
+
+\tiny M. A. Albreem, M. Juntti and S. Shahabuddin, "Massive MIMO detection techniques: A survey", IEEE Commun. Surv. Tutor, 2019.
+
+\tiny  IEEE Signal Processing Society Gujarat Section Expert talk on "MIMO communication in 5G and beyond"
+%ISWCS 2018, Lisbon, Aug. 28, 2018
+\end{frame}
+
+
+
+%\begin{frame}[fragile=singleslide]\frametitle{Why Massive MIMO?}
+%Energy efficiency:
+%\begin{itemize}
+%\item Due to coherent combining, the transmitted power is inversely proportionate to the number of transmit antennas$(\propto \frac{1}{n_{t}})$
+%\item the throughput increases by increasing the number of transmit antennas and without increasing the transmit power
+%\end{itemize}
+
+%\begin{columns}[T] % align columns
+%\begin{column}{.48\textwidth}
+
+
+%\begin{figure}
+ % \includegraphics[width=2.5cm, height=2.5cm]{Capture13.PNG}
+%\end{figure}
+
+%\begin{itemize}
+%\item \footnotesize Same range with reduced power
+%\begin{itemize}
+%\item \tiny Increase battery lifetime in UL
+%\item \tiny $Low\,power\,per\, antenna\, in\, DL\, 40W\,then4W\, per\, BS,\, 40 mW/antenna$
+%\end{itemize}
+%\end{itemize}
+
+
+%\end{column}
+%\hfill
+%\begin{column}{.48\textwidth}
+
+%\begin{figure}
+%  \includegraphics[width=3.4cm, height=2.5cm]{Capture14.PNG}
+%\end{figure}
+%\begin{itemize}
+%\item \footnotesize Use same transmit power
+%\begin{itemize}
+%\item \tiny Higher rates to already covered places
+%\item \tiny Reach new places (e.g., indoor)
+%\end{itemize}
+%\end{itemize}
+%\end{column}
+%\end{columns}
+%\end{frame}
+
+
+
+
+
+\begin{frame}[fragile=singleslide]\frametitle{Why Massive MIMO?}
+Energy efficiency:
+\begin{itemize}
+\item Due to coherent combining, the transmitted power is inversely proportionate to the number of transmit antennas$(\propto \frac{1}{n_{t}})$
+\item the throughput increases by increasing the number of transmit antennas and without increasing the transmit power
+\end{itemize}
+
+\begin{figure}
+  \includegraphics[width=2.5cm, height=2.5cm]{Capture14.PNG}
+  \includegraphics[width=4cm, height=2.5cm]{Capture53.PNG}
+  \includegraphics[width=3.4cm, height=2.5cm]{Capture13.PNG}
+\end{figure}
+
+\footnotesize Same range with reduced power \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;Use same transmit power
+
+\begin{itemize}
+	\begin{minipage}{0.49\linewidth}
+        \item \tiny Higher rates to already covered places
+        \item \tiny Reach new places (e.g., indoor)
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \item \tiny Increase battery lifetime in UL
+        \item \tiny Low power per antenna in DL 40W then 4W per BS, 40mW/antenna
+   \end{minipage}
+\end{itemize}
+
+
+
+\tiny M. A. Albreem, M. Juntti and S. Shahabuddin, "Massive MIMO detection techniques: A survey", IEEE Commun. Surv. Tutor, 2019.
+
+
+\tiny YouTube channel: Wireless Future
+\end{frame}
+
+
+
+
+
+
+
+\begin{frame}[fragile=singleslide]\frametitle{Why Massive MIMO?}
+\begin{itemize}
+\item Security enhancement and robustness improvement:
+\item[] \small mMIMO leads to a large number of degrees of freedom which can be used to cancel the signals from intentional jammers
+
+\vspace{1cm}
+
+
+\item Cost efficiency:
+\begin{itemize}
+\item \small mMIMO eliminates the need for bulky items such as coaxial cables
+
+\item \small mMIMO uses cheap mwatts amplifier instead of a multiple expensive  HPA
+
+\item can reduce the radiated power$\times$1000 and at the same time drastically maximize the data rates
+\end{itemize}
+
+\end{itemize}
+
+\vspace{1cm}
+
+\tiny M. A. Albreem, M. Juntti and S. Shahabuddin, "Massive MIMO detection techniques: A survey", IEEE Commun. Surv. Tutor, 2019.
+\end{frame}
+
+
+
+\begin{frame}[fragile=singleslide]\frametitle{Why Massive MIMO?}
+
+Signal processing:
+\begin{itemize}
+\item A large number of antennas eliminates the:
+\begin{itemize}
+\item interference effects
+\item fast fading
+\item uncorrelated noise
+\item thermal noise
+\end{itemize}
+$\Rightarrow$ simplifies the signal processing
+\vspace{0.3cm}
+
+\item channel responses from the base station to user terminals are different (mutually orthogonal, i.e., the inner products are zero).
+
+\end{itemize}
+
+\vspace{1.8cm}
+
+\tiny M. A. Albreem, M. Juntti and S. Shahabuddin, "Massive MIMO detection techniques: A survey", IEEE Commun. Surv. Tutor, 2019.
+
+\end{frame}
+
+
+\end{document}
