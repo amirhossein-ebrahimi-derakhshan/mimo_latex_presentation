@@ -44,8 +44,8 @@
       %\setbeamertemplate{headline}{}
     }
 
-%\definecolor{mediumturquoise}{rgb}{0.125, 0.5, 0.25}
-%\usecolortheme[named = mediumturquoise]{structure}
+\definecolor{mediumturquoise}{rgb}{0.125, 0.5, 0.25}
+\usecolortheme[named = mediumturquoise]{structure}
 %\addtobeamertemplate{navigation symbols}{}{%
  %   \usebeamerfont{footline}%
   %  \usebeamercolor[fg]{footline}%
@@ -64,6 +64,9 @@
 \begin{document}
 
 \begin{frame}
+\begin{figure}
+\includegraphics[width=3cm, height=3cm]{logo.PNG}
+\end{figure}
 \titlepage
 \end{frame}
 
@@ -122,15 +125,16 @@ This presentation focuses on the wireless communication links between BSs and UE
 %    \includegraphics[width=3cm, height=4cm]{Capture01.PNG}
 %\end{wrapfigure}
 %\begin{landscape}
-several branches of wireless technologies
+Several branches of wireless technologies :
+
+\centerline{IEEE 802.11 family, 3GPP family and 3GPP2 family}
+
+
+They form a heterogeneous network consisting of two main tiers:
 
 
 
-they form a heterogeneous network consisting of two main tiers:
-
-
-
-Coverage tier \& Hotspot tier
+\centerline{Coverage tier \& Hotspot tier}
  
 %\hspace{1.5cm}\includegraphics[width=7.5cm, height=6cm]{Capture01.PNG} 
 %\end{landscape}
@@ -150,8 +154,8 @@ Coverage tier \& Hotspot tier
 \begin{enumerate}
 \item Coverage tier: Outdoor cellular BSs
 \begin{itemize}
-\item coverage, elevated base stations
-\item Outdoor-to-indoor coverage: Operate <6 GHz
+\item Provide coverage, elevated base stations
+\item Outdoor-to-indoor coverage: Operate $<6$GHz
 \item High spectral efficiency is desired
 \end{itemize}
 
@@ -170,6 +174,30 @@ Coverage tier \& Hotspot tier
 \tiny Emil Björnson, Jakob Hoydis and Luca Sanguinetti (2017), “Massive MIMO Networks: Spectral, Energy, and Hardware Efficiency”, Foundations and Trends® in Signal Processing
 
 \end{frame}
+
+
+\begin{frame}[fragile=singleslide]\frametitle{The Success of Wireless Communications}
+
+\begin{itemize}
+\item More devices and data traffic every year
+\begin{itemize}
+\item 10\% more devices
+\item 47\% more traffic (33\% more per device)
+\end{itemize}
+\end{itemize}
+%\begin{landscape}
+%\includegraphics[width=7cm, height=4cm]{Capture04.PNG}
+%\caption{Data source:Ericsson Mobility Report (July, November 2017)} 
+%\label{Data source:Ericsson Mobility Report (July, November 2017)}
+%\end{landscape}
+\begin{figure}
+  \includegraphics[width=10cm, height=4.5cm]{Capture04.PNG}
+\caption{Data source:Ericsson Mobility Report (July, November 2017)} 
+%\label{Data source:Ericsson Mobility Report (July, November 2017)}
+\end{figure}
+\end{frame}
+
+
 
 \section{Improving Cellular Networks}
 
@@ -197,27 +225,6 @@ Consequently, three main ways to improve the area throughput of cellular network
 \end{frame}
 
 %Current cellular networks utilize more than 1 GHz of bandwidth in the frequency range below 6 GHz.
-
-\begin{frame}[fragile=singleslide]\frametitle{The Success of Wireless Communications}
-
-\begin{itemize}
-\item More devices and data traffic every year
-\begin{itemize}
-\item 10\% more devices
-\item 47\% more traffic (33\% more per device)
-\end{itemize}
-\end{itemize}
-%\begin{landscape}
-%\includegraphics[width=7cm, height=4cm]{Capture04.PNG}
-%\caption{Data source:Ericsson Mobility Report (July, November 2017)} 
-%\label{Data source:Ericsson Mobility Report (July, November 2017)}
-%\end{landscape}
-\begin{figure}
-  \includegraphics[width=10cm, height=4.5cm]{Capture04.PNG}
-\caption{Data source:Ericsson Mobility Report (July, November 2017)} 
-%\label{Data source:Ericsson Mobility Report (July, November 2017)}
-\end{figure}
-\end{frame}
 
 
 
@@ -314,7 +321,7 @@ $$f < 2B$$ %Nyquist rate
 
 The SE of an encoding/decoding scheme is the average number of bits of information, per complex valued sample, that it can reliably transmit over the channel(bit/s/Hz).
 
-$$\mathrm{ SE = \log_{2}\left(1+\frac{Transmit\, signal\, power \cdot \textcolor{green}{Pathloss}}{\textcolor{green}{interference power} + N_{0} \cdot \textcolor{blue}{bandwidth}}\right) }$$ %Shannon–Hartley theorem
+$$\mathrm{ SE = \log_{2}\left(1+\frac{Transmit\, signal\, power \cdot \textcolor{green}{Pathloss}}{\textcolor{green}{interference\; power} + N_{0} \cdot \textcolor{blue}{bandwidth}}\right) }$$ %Shannon–Hartley theorem
 
 \vspace{0.4cm}
 
@@ -329,7 +336,7 @@ $$\mathrm{ SE = \log_{2}\left(1+\frac{Transmit\, signal\, power \cdot \textcolor
  %\setbeamertemplate{caption}{\insertcaption}
  %\caption{\tiny source: YouTube channel: Wireless Future}
 \end{figure}
-Same transmit power \hspace{1.7cm}        More antennas
+Same transmit power \hspace{1.85cm}        More antennas
 
 
 \vspace{0.35cm}
@@ -408,14 +415,14 @@ The word “massive” refer to the number of antennas and not the physical size
   \caption{\tiny The array consists of 160 dual-polarized patch antennas. It is designed for a carrier frequency of 3.7 GHz, and the element spacing is 4 cm (half a wavelength).}
 \tiny E. Bjornson, E. G. Larsson and T. L. Marzetta,"Massive mimo: ten myths and one critical question", IEEE Commun. Mag, vol. 54, pp. 114-123,2016.
 \end{figure}
-
+\tiny source: ma-mimo.ellintech.se
 \end{frame}
 
 \section{Canonical Massive MIMO network Definition}
 
 \begin{frame}[fragile=singleslide]\frametitle{Canonical Massive MIMO network Definition:}
 \begin{itemize}
-\item A multicarrier cellular network with L cells
+\item A multicarrier cellular network with many cells
 \item Operate according to a synchronous TDD protocol
 \item $with \; M_{j} \geq 1 \;antennas$
 \item $BS \ j \ communicates \ with \ K_{j} \ UEs \ on \ each \ time/frequency$
@@ -597,16 +604,16 @@ Energy efficiency:
   \includegraphics[width=3.4cm, height=2.5cm]{Capture13.PNG}
 \end{figure}
 
-\footnotesize Same range with reduced power \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;Use same transmit power
+Same range with reduced power \;\;\;\;\;Use same transmit power
 
 \begin{itemize}
 	\begin{minipage}{0.49\linewidth}
-        \item \tiny Higher rates to already covered places
-        \item \tiny Reach new places (e.g., indoor)
+        \item \scriptsize Increase battery lifetime in UL
+        \item \scriptsize Low power per antenna in DL
     \end{minipage}
     \begin{minipage}{0.49\linewidth}
-        \item \tiny Increase battery lifetime in UL
-        \item \tiny Low power per antenna in DL 40W then 4W per BS, 40mW/antenna
+        \item \scriptsize Reach new places (e.g., indoor)
+	    \item \scriptsize Higher rates to already covered places
    \end{minipage}
 \end{itemize}
 
